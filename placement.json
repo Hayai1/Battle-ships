@@ -1,0 +1,32 @@
+{
+    "shipLocs": [{
+        "name": "AirC",
+        "x": 0,
+        "y": 0,
+        "direction": "right"  
+    },
+    {
+        "name": "Batp",
+        "x": 5,
+        "y": 1,
+        "direction": "left"  
+    },
+    {
+        "name": "Crur",
+        "x": 4,
+        "y": 3,
+        "direction": "down"  
+    },
+    {
+        "name": "Subm",
+        "x": 0,
+        "y": 7,
+        "direction": "up"  
+    },
+    {
+        "name": "Dest",
+        "x": 2,
+        "y": 7,
+        "direction": "left"  
+    }]
+}
