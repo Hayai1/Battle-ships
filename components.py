@@ -1,4 +1,3 @@
-
 from random import randint
 from json import load
 def initialise_board(size=10):
@@ -17,7 +16,6 @@ def create_battleships(filename="battleships.txt"):
     for ship in range(0, len(shipData), 2):
         ships[shipData[ship]] = int(shipData[ship+1])
     return ships
-
 
 def print_board(board):
     print("  ", end="")
@@ -70,5 +68,3 @@ def place_battleships(board, ships, configuration='simple'):
                 board[ship['y']+walkCounter*placementDirection[1]][ship['x']+walkCounter*placementDirection[0]] = ship['name']
     return board
 
-board = place_battleships(initialise_board(),create_battleships(),'placement.json')
-print_board(board)
