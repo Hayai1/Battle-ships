@@ -1,17 +1,17 @@
 from components import *
 
 def attack(coordinates, board, battleships):
-    cell = board[coordinates[0]][coordinates[1]]
-    if cell == None:
-        print("Miss!")
-        return False
-    else:
-        print("Hit!")
-        board[coordinates[0]][coordinates[1]] = None
+    x = coordinates[0]
+    y = coordinates[1]
+    hit = False
+    cell = board[y][x]
+    if cell != None:
         battleships[cell] -= 1
         if battleships[cell] == 0:
             del battleships[cell]
-        return True
+        board[y][x] = None
+        hit = True
+    return hit, board, battleships
         
     
 def cli_coordinates_input():
@@ -25,12 +25,16 @@ def cli_coordinates_input():
 def simple_game_loop():
     board = initialise_board()
     ships = create_battleships()
-    place_battleships(board, ships)
+    place_battleships(board, ships, 'placement.json')
     print_board(board)
     while (ships != []):
         print("Welcome to Battleships!")
         place_battleships(board, ships)
-        attack(cli_coordinates_input(), board, ships)
+        hit, board,ships = attack(cli_coordinates_input(), board, ships)
+        if hit:
+            print("Hit!")
+        else:
+            print("Miss!")
     print("You win!")
 
 if __name__ == "__main__":

@@ -11,10 +11,11 @@ def initialise_board(size=10):
 def create_battleships(filename="battleships.txt"):
     ships = {}
     file = open(filename, "r")
-    shipData = file.readlines()[0].split(",")
+    shipData = file.read().split("\n")
     file.close()
-    for ship in range(0, len(shipData), 2):
-        ships[shipData[ship]] = int(shipData[ship+1])
+    for ship in shipData:
+        ship = ship.split(":")
+        ships[ship[0]] = int(ship[1])
     return ships
 
 def print_board(board):
@@ -28,16 +29,16 @@ def print_board(board):
             print(board[i][j], end=" ")
         print()
 
-def place_battleships(board, ships, configuration='simple'):
+def place_battleships(board, ships, algorithm='simple'):
     boardDimensions = (len(board)-1,len(board[0])-1)
-    if (configuration == 'simple'):
+    if (algorithm == 'simple'):
         row = 0
         for ship in ships:
             x = randint(0,boardDimensions[0]-ships[ship])
             for walkCounter in range(ships[ship]):
                 board[row][x+walkCounter] = ship
             row+=1
-    elif (configuration == 'random'):
+    elif (algorithm == 'random'):
         for ship in ships:
             shipLength = ships[ship]
             findingViableLocationForTheShip = True
@@ -58,13 +59,18 @@ def place_battleships(board, ships, configuration='simple'):
                         board[loc[0]][loc[1]] = ship
                     findingViableLocationForTheShip = False   
     else:
-        placementDirections = { 'right':(1,0), 'left':(-1,0), 'up':(0,-1), 'down':(0,1) }
-        with open(configuration) as f:data = load(f)
-        shiplocations = data['shipLocs']
-        for ship in shiplocations:
-            shipLengths = ships[ship['name']]
-            placementDirection = placementDirections[ship['direction']]
-            for walkCounter in range(0, shipLengths):
-                board[ship['y']+walkCounter*placementDirection[1]][ship['x']+walkCounter*placementDirection[0]] = ship['name']
+        placementDirections = { 'h':(1,0), 'v':(0,1) }
+        with open(algorithm) as f:shipLocs = load(f)
+        for ship in shipLocs:
+            shiploc = shipLocs[ship]
+            x = int(shiploc[0])
+            y = int(shiploc[1])
+            orientation = shiploc[2]
+            shipLengths = ships[ship]
+            placementDirection = placementDirections[orientation]
+            placementDirectionX = placementDirection[0]
+            placementDirectionY = placementDirection[1]
+            for walkCounter in range(0, shipLengths):  
+                board[y+walkCounter*placementDirectionY][x+walkCounter*placementDirectionX] = ship
     return board
 

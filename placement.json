@@ -1,32 +1,7 @@
 {
-    "shipLocs": [{
-        "name": "AirC",
-        "x": 0,
-        "y": 0,
-        "direction": "right"  
-    },
-    {
-        "name": "Batp",
-        "x": 5,
-        "y": 1,
-        "direction": "left"  
-    },
-    {
-        "name": "Crur",
-        "x": 4,
-        "y": 3,
-        "direction": "down"  
-    },
-    {
-        "name": "Subm",
-        "x": 0,
-        "y": 7,
-        "direction": "up"  
-    },
-    {
-        "name": "Dest",
-        "x": 2,
-        "y": 7,
-        "direction": "left"  
-    }]
-}
+    "Aircraft_Carrier":["0","0","h"],
+    "Battleship":["2","2","v"],
+    "Cruiser":["4","4","h"],
+    "Submarine":["6","6","v"],
+    "Destroyer":["8","8","h"]
+  }
