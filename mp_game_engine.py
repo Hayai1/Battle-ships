@@ -8,9 +8,9 @@ def newUser(name, board):
     players[name] = board
     return name
 
-def generate_attack(board): 
+def generate_attack(): 
     from random import randint
-    return (randint(0, len(board)-1), randint(0, len(board)-1))
+    return (randint(0, 9), randint(0,9))
 
 def ai_opponent_game_loop():
     print("Welcome to Battleships!")
