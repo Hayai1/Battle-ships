@@ -69,13 +69,18 @@
             })
             .then(response => response.json())
             .then(data => {
+                if (data['alreadyGuessed']){
+                    //AI sunk a ship
+                    log_string = data['alreadyGuessed'];
+                }
                 //Process the response
-                if (data['hit'] === true) {
+                else if (data['hit'] === true) {
                     //Change the colour of the div to red if the attack was a hit
                     let cell = document.getElementById('cell-' + x + '-' + y);
                     cell.style.backgroundColor = 'red';
 
-                } else {
+                } 
+                else {
                     //Change the colour of the div to blue if attack was a miss
                     let cell = document.getElementById('cell-' + x + '-' + y);
                     cell.style.backgroundColor = 'lightblue';
@@ -96,7 +101,8 @@
                         log_string+= " and hit";
                     }
                 }
-
+                
+                
                 //Update the game log
                 document.getElementById('messageBox').innerHTML = log_string + "<br>" + document.getElementById('messageBox').innerHTML;
 

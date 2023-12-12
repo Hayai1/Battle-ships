@@ -1,5 +1,10 @@
 from components import *
 
+chosen_coordinates = {}
+
+def new_set_of_chosen_coordinates(name):
+    chosen_coordinates[name] = []
+
 def attack(coordinates, board, battleships):
     x = coordinates[0]
     y = coordinates[1]

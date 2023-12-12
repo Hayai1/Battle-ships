@@ -1,5 +1,6 @@
 from random import randint
 from json import load, dump
+
 def initialise_board(size=10):
     board = []
     for i in range(size):

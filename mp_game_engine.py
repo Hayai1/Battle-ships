@@ -1,9 +1,12 @@
 from components import create_battleships, initialise_board, place_battleships, print_board
-from game_engine import attack, cli_coordinates_input
+from game_engine import attack
 
 players = {
     
 }
+
+
+
 def newUser(name, board, ships):
     players[name] = [board, ships]
     return name
