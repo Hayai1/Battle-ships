@@ -4,8 +4,8 @@ from game_engine import attack, cli_coordinates_input
 players = {
     
 }
-def newUser(name, board):
-    players[name] = board
+def newUser(name, board, ships):
+    players[name] = [board, ships]
     return name
 
 def generate_attack(): 
@@ -14,8 +14,8 @@ def generate_attack():
 
 def ai_opponent_game_loop():
     print("Welcome to Battleships!")
-    user = newUser(input("Enter a username: "), initialise_board())
-    ai = newUser('AI', initialise_board())
+    user = newUser(input("Enter a username: "), initialise_board(), create_battleships())
+    ai = newUser('AI', initialise_board(),create_battleships())
     aiships = create_battleships()
     playerships = create_battleships()
     playersBoard = place_battleships(players[user],playerships, 'placement.json')

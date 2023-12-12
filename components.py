@@ -1,5 +1,5 @@
 from random import randint
-from json import load
+from json import load, dump
 def initialise_board(size=10):
     board = []
     for i in range(size):
@@ -17,7 +17,10 @@ def create_battleships(filename="battleships.txt"):
         ship = ship.split(":")
         ships[ship[0]] = int(ship[1])
     return ships
-
+def reWritePlacementJsonFile(data, filename="placement.json"):
+    with open(filename, 'w') as outfile:
+        dump(data, outfile)
+    return True
 def print_board(board):
     print("  ", end="")
     for i in range(len(board)):
