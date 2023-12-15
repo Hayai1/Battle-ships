@@ -20,12 +20,27 @@ def attack(coordinates, board, battleships):
         
     
 def cli_coordinates_input():
-    print("Enter coordinates to attack (x,y):")
-    print("x: ", end="")
-    x = int(input())
-    print("y: ", end="")
-    y = int(input())
+    while True:
+        print("Enter coordinates to attack (x,y):")
+        print("x: ", end="")
+        try:
+            x = int(input())
+            break
+        except:
+            print("Invalid x input")
+    while True:
+        print("y: ", end="")
+        try:
+            y = int(input())
+            break
+        except:
+            print("Invalid y input")    
     return (x,y)
+
+def within_board(coordinates, board):
+    x = coordinates[0]
+    y = coordinates[1]
+    return x >= 0 and x < len(board[0]) and y >= 0 and y < len(board)
 
 def simple_game_loop():
     board = initialise_board()
@@ -35,7 +50,11 @@ def simple_game_loop():
     while (ships != []):
         print("Welcome to Battleships!")
         place_battleships(board, ships)
-        hit, board,ships = attack(cli_coordinates_input(), board, ships)
+        loc = cli_coordinates_input()
+        while not within_board(loc, board):
+            print("Invalid coordinates")
+            loc = cli_coordinates_input()
+        hit, board,ships = attack(loc, board, ships)
         if hit:
             print("Hit!")
         else:

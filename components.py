@@ -18,7 +18,7 @@ def create_battleships(filename="battleships.txt"):
         ship = ship.split(":")
         ships[ship[0]] = int(ship[1])
     return ships
-def reWritePlacementJsonFile(data, filename="placement.json"):
+def write_Placement_Json_File(data, filename="placement.json"):
     with open(filename, 'w') as outfile:
         dump(data, outfile)
     return True

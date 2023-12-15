@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, redirect, request
 import game_engine
-from components import create_battleships, initialise_board,reWritePlacementJsonFile, place_battleships, print_board
+from components import create_battleships, initialise_board,write_Placement_Json_File, place_battleships, print_board
 from mp_game_engine import newUser, generate_attack, newUser, players, ai
 
 app = Flask(__name__, template_folder='templates')
@@ -10,7 +10,6 @@ def root():
     if request.method == 'GET':
         #check if the player has already placed their ships
         try:
-            print_board(players["ai"][0])
             player_board=players["player"][0]
             return render_template('main.html', player_board=player_board)
         
@@ -20,14 +19,13 @@ def root():
 
 @app.route('/attack', methods=['GET'])
 def attack():
-    
     if request.method == 'GET':
         x = int(request.args.get('x'))
         y = int(request.args.get('y'))
-        playerBoard = players["player"][0]
-        aiBoard = players["ai"][0]
-        playerShips = players["player"][1]
-        aiShips = players["ai"][1]
+        player_board = players["player"][0]
+        ai_board = players["ai"][0]
+        player_ships = players["player"][1]
+        ai_ships = players["ai"][1]
         
         #check if the player has already guessed at this location
         if (x,y) in game_engine.chosen_coordinates["player"]:
@@ -36,28 +34,29 @@ def attack():
         #if not, add it to the list of guessed locations
         game_engine.chosen_coordinates["player"].append((x,y))
 
-        #attack ai ship with inputted coordinates 
-        hitAiship, aiBoard,aiShips = game_engine.attack((x,y), aiBoard, aiShips)
+        #attack ai board at the coordinates 
+        hit_ai_ship, ai_board,ai_ships = game_engine.attack((x,y), ai_board, ai_ships)
 
         #generate ai attack coordinates and attack at those coordinates
         ai_attack_coordinates = ai.generate_attack()
 
-        hitPlayerShip, playerBoard,playerShips = game_engine.attack(ai_attack_coordinates, playerBoard, playerShips)
-        if hitPlayerShip:ai.lastMoveWasAHit = True
-        print(hitPlayerShip)
+        #attack player board at the coordinates 
+        hit_player_ship, player_board,player_ships = game_engine.attack(ai_attack_coordinates, player_board, player_ships)
+        if hit_player_ship:ai.lastMoveWasAHit = True
+
         #update the players and ai's dictionary with the new boards and ships
-        players["player"][0] = playerBoard
-        players["ai"][0] = aiBoard  
-        players["player"][1] = playerShips 
-        players["ai"][1] = aiShips 
+        players["player"][0] = player_board
+        players["ai"][0] = ai_board  
+        players["player"][1] = player_ships 
+        players["ai"][1] = ai_ships 
 
         #check for winning conditions:
         if players["ai"][1] == {}:
-            return jsonify({'hit': hitAiship,'AI_Turn': ai_attack_coordinates,'finished': 'you win!!!'})
+            return jsonify({'hit': hit_ai_ship,'AI_Turn': ai_attack_coordinates,'finished': 'you win!!!'})
         if players["player"][1] == {}:
-            return jsonify({'hit': hitAiship,'AI_Turn': ai_attack_coordinates,'finished': 'you lose...'})
+            return jsonify({'hit': hit_ai_ship,'AI_Turn': ai_attack_coordinates,'finished': 'you lose...'})
         #if no winning conditions are met, return the hit status and the ai's attack coordinates
-        return jsonify({'hit': hitAiship,'AI_Turn': ai_attack_coordinates})
+        return jsonify({'hit': hit_ai_ship,'AI_Turn': ai_attack_coordinates})
 
 @app.route('/placement', methods=['GET', 'POST'])
 def placement_interface():
@@ -70,7 +69,7 @@ def placement_interface():
     if request.method == 'POST':
         #get the json data from the request and rewrite the placement.json file
         data = request.get_json()
-        reWritePlacementJsonFile(data)
+        write_Placement_Json_File(data)
 
         #create the boards and ships for the player and ai
         player_ships = create_battleships()

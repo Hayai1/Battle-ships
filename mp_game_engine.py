@@ -1,7 +1,6 @@
 from ai import AI
 from components import create_battleships, initialise_board, place_battleships, print_board
-from game_engine import attack, chosen_coordinates
-from random import randint
+from game_engine import attack
 ai = AI()
 players = {
     
