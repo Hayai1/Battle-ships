@@ -68,7 +68,6 @@ def test_generate_attack_function_correct_direction():
 
     ai.last_move_was_a_hit = True
     loc = ai.generate_attack()
-    print(loc)
     assert loc == (3,2), "The generate_attack method does not return a correct tuple"
 
     ai.last_move_was_a_hit = False
@@ -99,7 +98,6 @@ def test_generate_attack_function_correct_direction():
 
     ai.last_move_was_a_hit = False
     loc = ai.generate_attack()
-    print(loc)
     assert loc == (1,3), "The generate_attack method does not return a correct tuple"
 
     ai.last_move_was_a_hit = False
