@@ -1,19 +1,19 @@
+from ai import AI
 from components import create_battleships, initialise_board, place_battleships, print_board
-from game_engine import attack
-
+from game_engine import attack, chosen_coordinates
+from random import randint
+ai = AI()
 players = {
     
 }
-
-
 
 def newUser(name, board, ships):
     players[name] = [board, ships]
     return name
 
-def generate_attack(): 
-    from random import randint
-    return (randint(0, 9), randint(0,9))
+#random
+def generate_attack():
+    return ai.generate_attack()
 
 def ai_opponent_game_loop():
     print("Welcome to Battleships!")
