@@ -42,7 +42,7 @@ def attack():
 
         #attack player board at the coordinates 
         hit_player_ship, player_board,player_ships = game_engine.attack(ai_attack_coordinates, player_board, player_ships)
-        if hit_player_ship:ai.lastMoveWasAHit = True
+        if hit_player_ship:ai.last_move_was_a_hit = True
 
         #update the players and ai's dictionary with the new boards and ships
         players["player"][0] = player_board
